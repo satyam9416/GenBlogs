@@ -1,0 +1,20 @@
+.blog-card {
+  display: grid;
+  overflow: hidden;
+  grid-template-rows: 1fr 1.5fr;
+  background-color: green;
+  min-height: 40rem;
+  border-radius: 2rem;
+  transition: all 0.5s;
+}
+.blog-card:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  cursor: pointer;
+}
+.blog-card > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

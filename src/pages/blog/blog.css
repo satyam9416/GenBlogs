@@ -1,0 +1,11 @@
+.blog-page {
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+  width: 100%;
+  position: relative;
+}
+@media (max-width: 768px) {
+  .blog-page {
+    grid-template-columns: 1fr;
+  }
+}

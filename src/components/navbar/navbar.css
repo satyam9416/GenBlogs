@@ -1,0 +1,109 @@
+.navbar {
+  display: flex;
+  font-size: 3rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 5rem;
+  align-items: center;
+  user-select: none;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  border-bottom: 1px solid gray;
+  background-color: rgb(197, 235, 195);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+.nav-logo-img {
+  width: 5rem;
+  border-radius: 50%;
+}
+.logo-div {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgb(35, 102, 5);
+}
+.logo-div:hover {
+  cursor: pointer;
+}
+.nav-elements {
+  list-style: none;
+  font-size: 1.5rem;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+.nav-btn:hover {
+  cursor: pointer;
+}
+.nav-auth-btns {
+  display: flex;
+  gap: 2rem;
+  font-size: 2rem;
+}
+.nav-auth-btns > button:hover {
+  cursor: pointer;
+}
+.nav-auth-btns button:nth-child(2) {
+  background-color: transparent;
+  color: green;
+  font-weight: 500;
+}
+.nav-auth-btns button:first-child {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background-color: green;
+  color: white;
+  font-weight: 600;
+}
+.nav-new-create-btn {
+  font-size: 2.2rem;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  background-color: green;
+  color: white;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+.nav-new-create-btn:hover {
+  cursor: pointer;
+  color: green;
+  background-color: white;
+}
+.vl {
+  width: 1px;
+  height: 3rem;
+  background-color: green;
+}
+.auth-data-div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 2rem;
+  font-weight: 500;
+  color: rgb(4, 53, 4);
+}
+.auth-data-div:hover {
+  cursor: pointer;
+}
+.auth-data-div > svg:nth-child(1) {
+  font-size: 2.5rem;
+}
+.auth-data-div > svg:nth-child(3) {
+  font-size: 3rem;
+  margin-left: -1rem;
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem 1rem;
+  }
+  .logo-div > span {
+    display: none;
+  }
+  .logo-div > img {
+    width: 5rem;
+  }
+}
