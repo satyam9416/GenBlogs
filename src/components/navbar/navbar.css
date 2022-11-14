@@ -78,20 +78,24 @@
   background-color: green;
 }
 .auth-data-div {
+  position: relative;
+}
+.nav-account-dropdown {
   display: flex;
   align-items: center;
   gap: 1rem;
   font-size: 2rem;
   font-weight: 500;
   color: rgb(4, 53, 4);
+  height: 100%;
 }
-.auth-data-div:hover {
+.nav-account-dropdown:hover {
   cursor: pointer;
 }
-.auth-data-div > svg:nth-child(1) {
+.nav-account-dropdown > svg:nth-child(1) {
   font-size: 2.5rem;
 }
-.auth-data-div > svg:nth-child(3) {
+.nav-account-dropdown > svg:nth-child(3) {
   font-size: 3rem;
   margin-left: -1rem;
 }

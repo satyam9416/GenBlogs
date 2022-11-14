@@ -5,14 +5,15 @@ import { auth, db } from '../../firebase'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { FaUserAlt } from 'react-icons/fa'
 import { RiArrowDropDownLine } from 'react-icons/ri'
+import NavProfileDropdown from '../nav-profile-dropdown/nav-profile-dropdown'
 
 const Navbar = () => {
 
     const navigate = useNavigate()
     const [authData, setAuthData] = useState(null)
+    const [expandDropdown, setExpandDropdown] = useState(false)
 
     const getAuthData = async () => {
-        console.log(auth.currentUser.email)
         const q = query(collection(db, 'Users'), where('email', '==', auth.currentUser.email.toLocaleLowerCase()));
 
         try {
@@ -40,9 +41,12 @@ const Navbar = () => {
                         <button type='button' className='nav-new-create-btn' onClick={() => { navigate('/create-new-blog') }}>Create</button>
                         <span className='vl'></span>
                         <div className='auth-data-div'>
-                            <FaUserAlt />
-                            <p>Hi, {authData?.name}</p>
-                            <RiArrowDropDownLine />
+                            <div className='nav-account-dropdown' onClick={() => setExpandDropdown(prev => !prev)}>
+                                <FaUserAlt />
+                                <p>Hi, {authData?.name}</p>
+                                <RiArrowDropDownLine />
+                            </div>
+                            {expandDropdown ? <NavProfileDropdown authData={authData} /> : null}
                         </div>
                     </> : <div className='nav-auth-btns'>
                         <button className='nav-sign-in-btn' onClick={() => navigate('/login')}>Sign In</button>
