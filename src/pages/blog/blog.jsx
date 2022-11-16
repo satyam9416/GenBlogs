@@ -6,7 +6,7 @@ import { db } from '../../firebase';
 import Navbar from '../../components/navbar/navbar';
 import LeftSide from '../../components/life-side/life-side';
 import BlogContent from '../../components/blog-content/blog-content';
-import useDocumentTitle from '../../context/useDocumentTitle';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 
 const BlogPage = () => {
     const [searchParams] = useSearchParams();

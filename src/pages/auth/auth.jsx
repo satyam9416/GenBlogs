@@ -1,67 +1,59 @@
 import './auth.css'
 import React, { useState } from 'react'
-import useDocumentTitle from '../../context/useDocumentTitle'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth, db } from '../../firebase'
-import { useNavigate } from 'react-router-dom';
-import { addDoc, collection } from 'firebase/firestore';
+import useDocumentTitle from '../../hooks/useDocumentTitle'
+import { auth } from '../../firebase'
+import { useLocation, useNavigate } from 'react-router-dom';
+import { UserAuth } from '../../context/authContext';
 
 const AuthPage = ({ isNewUser = false }) => {
     useDocumentTitle('GenBlogs - ' + (isNewUser ? 'Sign Up' : 'Login'))
-    const [loading, setLoading] = useState(false)
+    const location = useLocation()
     const [error, setError] = useState(null)
     const navigate = useNavigate()
+    const { handleGoogleSignIn, handleSignUp, handleSignIn, loading, authError } = UserAuth()
 
-    auth.onAuthStateChanged((user) => user ? navigate('/') : null)
+    auth.onAuthStateChanged((user) => {
+        if (!!user) return;
+        if (location?.state?.previousURL) {
+            navigate(location.state.previousURL)
+        } else {
+            navigate('/')
+        }
+    })
 
     const handleLogin = async (e) => {
         e.preventDefault()
-        setLoading(true)
         const email = e.target.email.value.toLocaleLowerCase()
         const passwd = e.target.passwd.value
-        try {
-            await signInWithEmailAndPassword(auth, email, passwd);
-        } catch (e) {
-            setError(e.message);
-            return;
-        } finally {
-            setLoading(false);
-        };
+        await handleSignIn(email, passwd)
+        setError(authError.message)
     };
 
-    const handleSignUp = async (e) => {
+    const SignUp = async (e) => {
         e.preventDefault()
-        setLoading(true)
         const name = e.target.name.value
         const email = e.target.email.value.toLocaleLowerCase()
         const passwd = e.target.passwd.value
         const confPasswd = e.target.confPasswd.value
 
         if (passwd === confPasswd) {
-            try {
-                setLoading(true);
-                await createUserWithEmailAndPassword(auth, email, passwd);
-                await addDoc(collection(db, 'Users'), { name, email });
-            } catch (e) {
-                setError(e.message);
-                return;
-            } finally {
-                setLoading(false);
-            };
+            handleSignUp(name, email, passwd)
+            setError(authError.message)
         }
         else {
             setError('Password and confirm password must be same !');
-            setLoading(false);
             return;
         };
 
     }
 
+    const handleFacebookSignIN = async () => { }
+
     const [showPassword, setShowPassword] = useState(false)
 
     return (
         <div className='login-page-div'>
-            <form className='login-form' onSubmit={isNewUser ? handleSignUp : handleLogin}>
+            <form className='login-form' onSubmit={isNewUser ? SignUp : handleLogin}>
                 <div className='login-logo-div'>
                     <img className='login-logo-img' src="/images/GenBlogs-Logo.png" alt="" />
                 </div>
@@ -143,12 +135,12 @@ const AuthPage = ({ isNewUser = false }) => {
                 <p>or sign {isNewUser ? 'up' : 'in'} using</p>
 
                 <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-brand-google" width="44" height="44" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#2c3e50" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    <svg onClick={handleGoogleSignIn} xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-brand-google" width="44" height="44" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#2c3e50" fill="none" strokeLinecap="round" strokeLinejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M17.788 5.108a9 9 0 1 0 3.212 6.892h-8" />
                     </svg>
 
-                    <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-brand-facebook" width="44" height="44" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#2c3e50" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    <svg onClick={handleFacebookSignIN} xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-brand-facebook" width="44" height="44" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#2c3e50" fill="none" strokeLinecap="round" strokeLinejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
                     </svg>

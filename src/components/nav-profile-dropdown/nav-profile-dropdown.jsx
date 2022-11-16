@@ -3,9 +3,11 @@ import React from 'react'
 import { signOut } from 'firebase/auth'
 import { auth } from '../../firebase'
 import { useNavigate } from 'react-router-dom'
+import { UserAuth } from '../../context/authContext'
 
-const NavProfileDropdown = ({ authData }) => {
+const NavProfileDropdown = () => {
     const navigate = useNavigate()
+    const { authData } = UserAuth()
 
     const logOut = async () => {
         await signOut(auth);
@@ -15,7 +17,7 @@ const NavProfileDropdown = ({ authData }) => {
     return (
         <div className='nav-profile-dropdown'>
             <div className='nav-profile-dropdown-name-info'>
-                <h2>{authData?.name}</h2>
+                <h2>{authData?.displayName}</h2>
                 <p>{authData?.email}</p>
             </div>
             <div className='nav-profile-dropdown-actions'>

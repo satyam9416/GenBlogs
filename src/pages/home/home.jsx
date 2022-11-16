@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../../components/navbar/navbar'
 import { db } from '../../firebase';
 import { collection, getDocs } from 'firebase/firestore';
-import useDocumentTitle from '../../context/useDocumentTitle';
+import useDocumentTitle from '../../hooks/useDocumentTitle';
 import BlogCard from '../../components/blog-card/blog-card';
 
 const HomePage = () => {

@@ -1,31 +1,16 @@
 import './navbar.css'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { auth, db } from '../../firebase'
-import { collection, getDocs, query, where } from 'firebase/firestore'
 import { FaUserAlt } from 'react-icons/fa'
 import { RiArrowDropDownLine } from 'react-icons/ri'
 import NavProfileDropdown from '../nav-profile-dropdown/nav-profile-dropdown'
+import { UserAuth } from '../../context/authContext'
 
 const Navbar = () => {
 
     const navigate = useNavigate()
-    const [authData, setAuthData] = useState(null)
     const [expandDropdown, setExpandDropdown] = useState(false)
-
-    const getAuthData = async () => {
-        const q = query(collection(db, 'Users'), where('email', '==', auth.currentUser.email.toLocaleLowerCase()));
-
-        try {
-            const querySnapshot = await getDocs(q);
-            const data = querySnapshot.docs.map((doc) => doc.data());
-            setAuthData({ ...data[0] });
-        } catch (error) {
-            console.log(error)
-        };
-    };
-
-    useEffect(() => { auth.currentUser && getAuthData() }, [])
+    const { authData } = UserAuth()
 
     return (
         <div className='navbar'>
@@ -36,14 +21,14 @@ const Navbar = () => {
 
             <ul className='nav-elements'>
 
-                {auth.currentUser ?
+                {authData !== null ?
                     <>
                         <button type='button' className='nav-new-create-btn' onClick={() => { navigate('/create-new-blog') }}>Create</button>
                         <span className='vl'></span>
                         <div className='auth-data-div'>
                             <div className='nav-account-dropdown' onClick={() => setExpandDropdown(prev => !prev)}>
                                 <FaUserAlt />
-                                <p>Hi, {authData?.name}</p>
+                                <p>Hi, {authData?.displayName}</p>
                                 <RiArrowDropDownLine />
                             </div>
                             {expandDropdown ? <NavProfileDropdown authData={authData} /> : null}
