@@ -11,14 +11,24 @@ const AuthPage = ({ isNewUser = false }) => {
     const [error, setError] = useState(null)
     const navigate = useNavigate()
     const { handleGoogleSignIn, handleSignUp, handleSignIn, loading, authError } = UserAuth()
+    let redirectUrl;
+
+    const getRedirectUrl = () => {
+        if (!location?.state?.previousURL) return '/'
+        if (!location?.state?.params) return location.state.previousURL;
+        let url = location.state.previousURL + '?'
+        Object.keys(location.state.params).forEach((key) => {
+            console.log(`${key}: ${location.state.params[key]}`);
+            url += `${key}=${location.state.params[key]}&`
+        });
+        return url;
+    }
+
+    redirectUrl = getRedirectUrl()
 
     auth.onAuthStateChanged((user) => {
-        if (!!user) return;
-        if (location?.state?.previousURL) {
-            navigate(location.state.previousURL)
-        } else {
-            navigate('/')
-        }
+        if (!user) return;
+        navigate(redirectUrl)
     })
 
     const handleLogin = async (e) => {
@@ -44,7 +54,6 @@ const AuthPage = ({ isNewUser = false }) => {
             setError('Password and confirm password must be same !');
             return;
         };
-
     }
 
     const handleFacebookSignIN = async () => { }
@@ -123,10 +132,10 @@ const AuthPage = ({ isNewUser = false }) => {
 
                 {isNewUser ? <p>
                     <span>Already have an account ?&nbsp;</span>
-                    <span onClick={() => navigate('/login')} className='auth-action-changer-span'>Login here</span>
+                    <span onClick={() => navigate('/login', location?.state ? { state: location.state } : null)} className='auth-action-changer-span'>Login here</span>
                 </p> : <p>
                     <span>Don't have an account ?&nbsp;</span>
-                    <span onClick={() => navigate('/signup')} className='auth-action-changer-span'>Create a new one</span>
+                    <span onClick={() => navigate('/signup', location?.state ? { state: location.state } : null)} className='auth-action-changer-span'>Create a new one</span>
                 </p>}
             </form>
 

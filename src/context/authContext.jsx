@@ -41,7 +41,9 @@ export const AuthProvider = ({ children }) => {
         const provider = new GoogleAuthProvider()
         setLoading(true)
         try {
-            await signInWithRedirect(auth, provider)
+            await signInWithRedirect(auth, provider).then((user) => {
+                console.log(user)
+            })
         } catch (e) {
             setError(e);
         } finally {
@@ -52,7 +54,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             setAuthData(user)
-            console.log(user)
+            setLoading(false)
         })
 
         return () => {
@@ -67,7 +69,6 @@ export const AuthProvider = ({ children }) => {
     )
 }
 
-// const UserAuth = () => { return useContext(authContext) }
 export const UserAuth = () => {
     return useContext(authContext)
 }
