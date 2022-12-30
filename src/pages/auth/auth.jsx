@@ -132,10 +132,10 @@ const AuthPage = ({ isNewUser = false }) => {
 
                 {isNewUser ? <p>
                     <span>Already have an account ?&nbsp;</span>
-                    <span onClick={() => navigate('/login', location?.state ? { state: location.state } : null)} className='auth-action-changer-span'>Login here</span>
+                    <span onClick={() => navigate('/login', location?.state !== undefined ? { state: location.state } : '')} className='auth-action-changer-span'>Login here</span>
                 </p> : <p>
                     <span>Don't have an account ?&nbsp;</span>
-                    <span onClick={() => navigate('/signup', location?.state ? { state: location.state } : null)} className='auth-action-changer-span'>Create a new one</span>
+                    <span onClick={() => navigate('/signup', location?.state !== undefined ? { state: location.state } : '')} className='auth-action-changer-span'>Create a new one</span>
                 </p>}
             </form>
 
