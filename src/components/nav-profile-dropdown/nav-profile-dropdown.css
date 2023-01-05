@@ -18,7 +18,7 @@
   transition: all 0.5s;
   font-weight: 500;
   font-size: 2rem;
-  height: 30rem;
+  height: auto;
 }
 .nav-profile-dropdown:hover {
   cursor: default;
@@ -63,14 +63,13 @@
 
 @keyframes animate-dropdown {
   0% {
-    height: 0;
-    opacity: 0;
+    max-height: 0;
     padding: 0;
-    width: 100%;
+    max-width: 100%;
   }
   60% {
-    height: 30rem;
-    width: 25.5rem;
+    max-height: 30rem;
+    max-width: 25.5rem;
     padding: 1rem;
     padding-left: 1.5rem;
     padding-top: 1.5rem;
@@ -79,6 +78,5 @@
     padding: 1rem;
     padding-top: 1rem;
     padding-left: 2rem;
-    opacity: 1;
   }
 }
