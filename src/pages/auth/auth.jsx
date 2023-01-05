@@ -70,7 +70,7 @@ const AuthPage = ({ isNewUser = false }) => {
 
     return (
         <div className='login-page-div'>
-            <form className='login-form' onSubmit={isNewUser ? SignUp : handleLogin}>
+            <form className='login-form' onSubmit={isNewUser ? SignUp : handleLogin} style={{ width: isNewUser ? '75rem' : '50rem', scale: isNewUser ? '1' : '0.9' }}>
                 <div className='login-logo-div'>
                     <img className='login-logo-img' src="/images/GenBlogs-Logo.png" alt="" />
                 </div>
