@@ -1,5 +1,5 @@
 import './auth.css'
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import useDocumentTitle from '../../hooks/useDocumentTitle'
 import { auth } from '../../firebase'
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -7,6 +7,12 @@ import { UserAuth } from '../../context/authContext';
 
 const AuthPage = ({ isNewUser = false }) => {
     useDocumentTitle('GenBlogs - ' + (isNewUser ? 'Sign Up' : 'Login'))
+    useEffect(() => {
+        if (!isNewUser) {
+            emailInputRef.current.focus()
+        }
+        
+    }, [isNewUser])
     const location = useLocation()
     const [error, setError] = useState(null)
     const navigate = useNavigate()
@@ -94,7 +100,7 @@ const AuthPage = ({ isNewUser = false }) => {
                             <polyline points="3 7 12 13 21 7" />
                         </svg>
 
-                        <input type="email" placeholder="Enter Email" name='email' required autoFocus={!isNewUser} />
+                        <input type="email" placeholder="Enter Email" name='email' ref={emailInputRef} />
                     </div>
                 </div>
                 <div className='auth-inputs-wrapper'>
