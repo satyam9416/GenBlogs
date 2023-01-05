@@ -5,28 +5,29 @@ import { FaUserAlt } from 'react-icons/fa'
 import { RiArrowDropDownLine } from 'react-icons/ri'
 import NavProfileDropdown from '../nav-profile-dropdown/nav-profile-dropdown'
 import { UserAuth } from '../../context/authContext'
-const ddTrigerRef = useRef()
 
-useEffect(() => {
-    const handleOutsideClick = (e) => {
-        if (!ddTrigerRef.current.contains(e.target)){
-            setExpandDropdown(false)
-        }
-    }
-
-    document.addEventListener('mousedown', handleOutsideClick)
-
-    return () => {
-        document.removeEventListener('mousedown', handleOutsideClick)
-    } 
-
-}, [])
 
 const Navbar = () => {
 
     const navigate = useNavigate()
     const [expandDropdown, setExpandDropdown] = useState(false)
     const { authData } = UserAuth()
+    const ddTrigerRef = useRef()
+
+    useEffect(() => {
+        const handleOutsideClick = (e) => {
+            if (!ddTrigerRef.current.contains(e.target)) {
+                setExpandDropdown(false)
+            }
+        }
+
+        document.addEventListener('mousedown', handleOutsideClick)
+
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick)
+        }
+
+    }, [])
 
     return (
         <div className='navbar'>
