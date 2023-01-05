@@ -6,19 +6,21 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { UserAuth } from '../../context/authContext';
 
 const AuthPage = ({ isNewUser = false }) => {
+    const emailInputRef = useRef()
     useDocumentTitle('GenBlogs - ' + (isNewUser ? 'Sign Up' : 'Login'))
-    useEffect(() => {
-        if (!isNewUser) {
-            emailInputRef.current.focus()
-        }
-        
-    }, [isNewUser])
     const location = useLocation()
     const [error, setError] = useState(null)
     const navigate = useNavigate()
     const { handleGoogleSignIn, handleSignUp, handleSignIn, loading, authError } = UserAuth()
     let redirectUrl;
 
+    useEffect(() => {
+        if (!isNewUser) {
+            emailInputRef.current.focus()
+        }
+        
+    }, [isNewUser])
+    
     const getRedirectUrl = () => {
         if (!location?.state?.previousURL) return '/'
         if (!location?.state?.params) return location.state.previousURL;
