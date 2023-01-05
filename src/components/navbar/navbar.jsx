@@ -1,10 +1,26 @@
 import './navbar.css'
-import React, { useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FaUserAlt } from 'react-icons/fa'
 import { RiArrowDropDownLine } from 'react-icons/ri'
 import NavProfileDropdown from '../nav-profile-dropdown/nav-profile-dropdown'
 import { UserAuth } from '../../context/authContext'
+const ddTrigerRef = useRef()
+
+useEffect(() => {
+    const handleOutsideClick = (e) => {
+        if (!ddTrigerRef.current.contains(e.target)){
+            setExpandDropdown(false)
+        }
+    }
+
+    document.addEventListener('mousedown', handleOutsideClick)
+
+    return () => {
+        document.removeEventListener('mousedown', handleOutsideClick)
+    } 
+
+}, [])
 
 const Navbar = () => {
 
@@ -25,7 +41,7 @@ const Navbar = () => {
                     <>
                         <button type='button' className='nav-new-create-btn' onClick={() => { navigate('/create-new-blog') }}>Create</button>
                         <span className='vl'></span>
-                        <div className='auth-data-div'>
+                        <div className='auth-data-div' ref={ddTrigerRef}>
                             <div className='nav-account-dropdown' onClick={() => setExpandDropdown(prev => !prev)}>
                                 <FaUserAlt />
                                 <p>Hi, {authData?.displayName}</p>
