@@ -24,12 +24,12 @@ export const AuthProvider = ({ children }) => {
     const handleSignUp = async (name, email, passwd) => {
         try {
             setLoading(true);
+            await addDoc(collection(db, 'Users'), { name, email });
             await createUserWithEmailAndPassword(auth, email, passwd).then((userCredential) => {
                 updateProfile(userCredential.user, {
                     displayName: name
                 })
             });
-            await addDoc(collection(db, 'Users'), { name, email });
         } catch (e) {
             setError(e);
         } finally {
